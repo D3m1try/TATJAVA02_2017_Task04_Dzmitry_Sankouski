@@ -13,7 +13,7 @@ public class Disk extends Bean implements Serializable {
         StringBuilder result = new StringBuilder();
         result.append(this.getClass().getSimpleName()).append("\n").
                 append("title:").append(getTitle())
-                .append(";date:").append(getDate())
+                .append(";date:").append(getDat())
                 .append(";message:").append(getMessage()).
                 append(";id:").append(getId());
 

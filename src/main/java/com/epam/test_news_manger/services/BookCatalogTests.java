@@ -39,7 +39,7 @@ public class BookCatalogTests {
         book.setTitle(TITLE);
         book.setPageCount(COUNT);
         book.setPageCount(COUNT);
-        book.setDate(date);
+        book.setDat(date);
         book.setMessage(MESSAGE);
 
         BooksCatalog.getInstance().add("-ISBN " + ISBN + " -d " + DATE_STR + " -t " + TITLE + " -m " + MESSAGE + " -p " + COUNT);

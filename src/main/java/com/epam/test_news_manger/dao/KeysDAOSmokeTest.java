@@ -2,10 +2,9 @@ package com.epam.test_news_manger.dao;
 import com.epam.news_manager.bean.BeanFactory;
 import com.epam.news_manager.bean.Keys;
 import com.epam.news_manager.dao.exception.DAOException;
-import com.epam.news_manager.dao.impl.DAOFactory;
+import com.epam.news_manager.dao.DAOFactory;
 import org.testng.Assert;
 import org.testng.annotations.*;
-import org.testng.Assert.*;
 
 import java.io.File;
 

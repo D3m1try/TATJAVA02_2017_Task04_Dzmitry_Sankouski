@@ -65,7 +65,7 @@ public abstract class GenericCatalog<T extends Bean> implements Catalog<T> {
 //            if (matcher.group(1).toUpperCase().contains("D")){
 //                DateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
 //                try {
-//                    book.setDate(format.parse(matcher.group(2)));
+//                    book.setDat(format.parse(matcher.group(2)));
 //                } catch (ParseException e) {
 //                    e.printStackTrace();//TODO throw exception
 //                }

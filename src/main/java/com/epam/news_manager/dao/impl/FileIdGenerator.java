@@ -27,4 +27,8 @@ public class FileIdGenerator {
         return  (BeanFactory.getInstance().getKeys().getSize() + 1) + "." + object.getClass().getSimpleName();
     }
 
+    public Class getTypeById(String id) throws ClassNotFoundException {
+        return Class.forName(id.substring(2));
+    }
+
 }

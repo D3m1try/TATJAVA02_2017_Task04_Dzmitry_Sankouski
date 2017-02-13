@@ -1,5 +1,6 @@
 package com.epam.news_manager.dao.impl;
 
+import com.epam.news_manager.bean.Bean;
 import com.epam.news_manager.bean.BeanFactory;
 import com.epam.news_manager.bean.Keys;
 import com.epam.news_manager.dao.exception.DAOException;
@@ -12,13 +13,13 @@ import java.sql.*;
  */
 public class SQLKeysDAO extends SQLGenericDAOimpl{
     String[] readKeysQueries = {
-            "select id from (books)",
-            "select id from (disks);",
-            "select id from (movies)"
+            "select id from book",
+            "select id from disk",
+            "select id from movie"
     };
     Connection connection;
     int affectedRows;
-    private final String CON_NAME = "jdbc:mysql://127.0.0.1/";
+    private final String CON_NAME = "jdbc:mysql://127.0.0.1/News";
     private final String USER = "root";
     private final String PASS = "123456";
     private final String DB_NAME = "News";
@@ -34,6 +35,16 @@ public class SQLKeysDAO extends SQLGenericDAOimpl{
             resultSet = statement.executeQuery(readKeysQueries[1]);
             while (resultSet.next()){
                 result.getBookIDs().add(resultSet.getString("id"));
+            }
+
+            resultSet = statement.executeQuery(readKeysQueries[2]);
+            while (resultSet.next()){
+                result.getDiskIDs().add(resultSet.getString("id"));
+            }
+
+            resultSet = statement.executeQuery(readKeysQueries[3]);
+            while (resultSet.next()){
+                result.getMovieIDs().add(resultSet.getString("id"));
             }
 
 

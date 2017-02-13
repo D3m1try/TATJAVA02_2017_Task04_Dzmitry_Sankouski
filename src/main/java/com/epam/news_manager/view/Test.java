@@ -2,20 +2,14 @@ package com.epam.news_manager.view;
 
 import com.epam.news_manager.bean.BeanFactory;
 import com.epam.news_manager.bean.Book;
-import com.epam.news_manager.dao.impl.FileIdGenerator;
+import com.epam.news_manager.bean.Disk;
+import com.epam.news_manager.bean.Movie;
 import com.epam.news_manager.dao.ultil.SQLQueryCreator;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.text.DateFormat;
-import java.text.ParseException;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Locale;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * Created by Dzmitry_Sankouski on 02-Feb-17.
@@ -53,13 +47,27 @@ public class Test {
         Book book;
         book = BeanFactory.getInstance().getBook();
         book.setTitle("zzzzzz");
-        book.setDate(new Date(13454566));
+        book.setDat(new Date(13454566));
         book.setMessage("kjndfskjsjkdfjvnsk");
         book.setISBN("sdjfkvgsjdfkvasjdfvka");
-        book.setId("0.book");
+//        book.setId("0.book");
+
+        Movie movie;
+        movie = BeanFactory.getInstance().getMovie();
+        movie.setTitle("zzzzzz");
+        movie.setDat(new Date(13454566));
+        movie.setMessage("kjndfskjsjkdfjvnsk");
+        movie.setId("0.movie");
+
+        movie = BeanFactory.getInstance().getMovie();
+        movie.setTitle("ksjfssssssssssssskas");
+        movie.setDat(new Date(13454566));
+        movie.setMessage("kjndfskjsdkfsjkdfhhhhhhhhhhhhhhhhhjvnsk");
 
         System.out.println(SQLQueryCreator.getInstance().getCreateTable(book));
         System.out.println(SQLQueryCreator.getInstance().getInsert(book));
+        System.out.println(SQLQueryCreator.getInstance().getSelect("0.book", book.getClass()));
+        System.out.println(SQLQueryCreator.getInstance().getCreateTable(movie));
 
 
     }

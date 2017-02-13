@@ -3,7 +3,7 @@ package com.epam.news_manager.service.impl;
 import com.epam.news_manager.bean.BeanFactory;
 import com.epam.news_manager.bean.Book;
 import com.epam.news_manager.dao.exception.DAOException;
-import com.epam.news_manager.dao.impl.DAOFactory;
+import com.epam.news_manager.dao.DAOFactory;
 import com.epam.news_manager.service.exception.ServiceException;
 
 import java.text.DateFormat;
@@ -68,7 +68,7 @@ public class BooksCatalog implements com.epam.news_manager.service.Catalog<Book>
             if (matcher.group(1).toUpperCase().contains("D")) {
                 DateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
                 try {
-                    book.setDate(format.parse(matcher.group(2)));
+                    book.setDat(format.parse(matcher.group(2)));
                 } catch (ParseException e) {
                     throw new ServiceException("Wrong date format");
                 }

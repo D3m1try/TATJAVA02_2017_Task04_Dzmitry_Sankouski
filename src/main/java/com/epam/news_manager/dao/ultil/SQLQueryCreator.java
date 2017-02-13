@@ -2,14 +2,9 @@ package com.epam.news_manager.dao.ultil;
 
 import com.epam.news_manager.bean.Bean;
 
-import java.beans.BeanInfo;
 import java.beans.IntrospectionException;
-import java.beans.Introspector;
-import java.beans.PropertyDescriptor;
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -17,13 +12,15 @@ import java.util.Map;
  */
 public class SQLQueryCreator {
     private static SQLQueryCreator instance = new SQLQueryCreator();
-    private final String CREATE_TABLE_BASE = "create table if not exists ";
-    private final String INSERT_BASE = "insert into ";
-    private final String PROBEL = " ";
+    private final String CREATE_TABLE_BASE = "CREATE TABLE IF NOT EXISTS ";
+    private final String INSERT_BASE = "INSERT INTO ";
+    private final String SELECT_BASE = "SELECT * FROM ";
+    private final String GAP = " ";
     private final String LEFT_PARENSIS = "(";
     private final String RIGHT_PARENSIS = ")";
     private final String SEMICOLON = ";";
     private final String COMMA = ",";
+    private final String APOSTROPHE = "'";
 
 
     private SQLQueryCreator(){
@@ -40,15 +37,20 @@ public class SQLQueryCreator {
 
     public String getCreateTable(Bean bean) throws IllegalAccessException, IntrospectionException, InvocationTargetException {
         StringBuilder query = new StringBuilder(CREATE_TABLE_BASE);
-        query.append(LEFT_PARENSIS);
+        query.append(bean.getClass().getSimpleName()).append(GAP).append(LEFT_PARENSIS);
+
         for (Map.Entry<String,Object> field :
-                getFields(bean).entrySet()) {
-            query.append(field.getKey()).append(PROBEL)
-                    .append(typeConvert(field.getValue())).append(COMMA);
+                BeanTinker.getFields(bean).entrySet()) {
+            query.append(field.getKey())
+                    .append(GAP)
+                    .append(typeConvert(field.getValue()))
+                    .append(COMMA)
+                    .append(GAP);
         }
 
-        query.insert(query.length() - 2 , RIGHT_PARENSIS);
-        return query.substring(0,query.length()-1); //TODO remove magic nums
+        query.replace(query.length() - 2, query.length() - 1 , RIGHT_PARENSIS);//TODO remove magic nums
+        // erasing gap & comma from last cycle iteration
+        return query.toString();
     }
 
     public String getInsert(Bean bean) throws IllegalAccessException, IntrospectionException, InvocationTargetException {
@@ -56,41 +58,42 @@ public class SQLQueryCreator {
         StringBuilder values = new StringBuilder(LEFT_PARENSIS);
         StringBuilder cols = new StringBuilder(LEFT_PARENSIS);
 
-        query.append(bean.getClass().getSimpleName()).append(PROBEL);
+        query.append(bean.getClass().getSimpleName()).append(GAP);
 
         for (Map.Entry<String,Object> field :
-                getFields(bean).entrySet()) {
-            cols.append(field.getKey()).append(COMMA).append(PROBEL);
-            values.append(field.getValue()).append(COMMA).append(PROBEL);
+                BeanTinker.getFields(bean).entrySet()) {
+
+            if (field.getValue() instanceof Date){
+                field.setValue(new java.sql.Date(((Date) field.getValue()).getTime()));
+            } // converting utils.date to sql.date
+
+            cols.append(field.getKey()).append(COMMA).append(GAP);
+            values.append(APOSTROPHE).append(field.getValue()).append(APOSTROPHE).append(COMMA).append(GAP);
         }
 
-        cols.insert(cols.length() - 2 , RIGHT_PARENSIS); //inserting in  last iteration comma place to erase it
-        values.insert(cols.length() - 2 , RIGHT_PARENSIS);
+        cols.replace(cols.length() - 2, cols.length() - 1 , RIGHT_PARENSIS);
+        values.replace(values.length() - 2, values.length() - 1, RIGHT_PARENSIS);
+
         query.append(cols).append(" values ").append(values);
 
         return query.toString();
     }
 
-
-
-    private Map<String,Object> getFields(Bean bean) throws IllegalAccessException, IntrospectionException, InvocationTargetException {
-        Map<String,Object> result = new HashMap<>();
-        Class target = bean.getClass();
-
-        BeanInfo info = Introspector.getBeanInfo(target);
-        for ( PropertyDescriptor pd : info.getPropertyDescriptors() ) {
-            result.put(pd.getName(),pd.getReadMethod().invoke(bean));
-        }
-
-        result.remove("class");
-
-        return  result;
+    public String getSelect(String id, Class type){
+        StringBuilder result = new StringBuilder();
+        result.append(SELECT_BASE).append(type.getSimpleName().toLowerCase())
+                .append(" where id = ")
+                .append(APOSTROPHE).append(id).append(APOSTROPHE);
+        return  result.toString();
     }
 
+
+
+
+
     private String typeConvert(Object target){
-        if (target == null){
-            return null;
-        } if (target instanceof String){
+
+        if (target instanceof String){
             return "varchar(500)";
         } if (target instanceof Integer){
             return "int";

@@ -2,7 +2,7 @@ package com.epam.test_news_manger.dao;
 
 import com.epam.news_manager.bean.*;
 import com.epam.news_manager.dao.exception.DAOException;
-import com.epam.news_manager.dao.impl.DAOFactory;
+import com.epam.news_manager.dao.DAOFactory;
 import com.epam.news_manager.dao.impl.FileGenericDAOImpl;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
@@ -17,7 +17,7 @@ import java.util.Date;
 public class FindableTest {
     static Book book;
     static Books books;
-    static Book disk;
+    static Disk disk;
     static Disks disks;
     static Movie movie;
     static Movies movies;
@@ -28,13 +28,13 @@ public class FindableTest {
     public static Object[][] sources() {
         book = BeanFactory.getInstance().getBook();
         book.setTitle("zzzzzz");
-        book.setDate(new Date(13454566));
+        book.setDat(new Date(13454566));
         book.setMessage("kjndfskjsjkdfjvnsk");
         book.setISBN("sdjfkvgsjdfkvasjdfvka");
 
         books = BeanFactory.getInstance().getBooks();
         books.setTitle("ksjfkas");
-        books.setDate(new Date(13454566));
+        books.setDat(new Date(13454566));
         books.setMessage("kjndfskjsdkfsjkdfjvnsk");
         for (int i = 0; i < 3; i++) {
             books.getListOfBooks().add(book);
@@ -42,12 +42,12 @@ public class FindableTest {
 
         disk = BeanFactory.getInstance().getDisk();
         disk.setTitle("disk");
-        disk.setDate(new Date(13454566));
+        disk.setDat(new Date(13454566));
         disk.setMessage("kjndfskjsdkfsjkdfjvnsk");
 
         disks = BeanFactory.getInstance().getDisks();
         disks.setTitle("disks");
-        disks.setDate(new Date(13454566));
+        disks.setDat(new Date(13454566));
         disks.setMessage("kjn--------------dfskjsdkfsjkdfjvnsk");
         for (int i = 0; i < 3; i++) {
             disks.getListOfDisks().add(disk);
@@ -55,12 +55,12 @@ public class FindableTest {
 
         movie = BeanFactory.getInstance().getMovie();
         movie.setTitle("ksjfssssssssssssskas");
-        movie.setDate(new Date(13454566));
+        movie.setDat(new Date(13454566));
         movie.setMessage("kjndfskjsdkfsjkdfhhhhhhhhhhhhhhhhhjvnsk");
 
         movies = BeanFactory.getInstance().getMovies();
         movies.setTitle("ksjqqq22222fkas");
-        movies.setDate(new Date(13454566));
+        movies.setDat(new Date(13454566));
         movies.setMessage("kjndfskjs33333333333dkfsjkdfjvnsk");
         for (int i = 0; i < 3; i++) {
             movies.getListOfMovies().add(movie);

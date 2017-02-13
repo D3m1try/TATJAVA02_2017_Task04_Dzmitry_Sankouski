@@ -1,7 +1,5 @@
 package com.epam.news_manager.bean;
 
-import com.epam.news_manager.dao.impl.DAOFactory;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;

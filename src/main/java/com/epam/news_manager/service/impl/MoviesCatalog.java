@@ -3,7 +3,7 @@ package com.epam.news_manager.service.impl;
 import com.epam.news_manager.bean.BeanFactory;
 import com.epam.news_manager.bean.Movie;
 import com.epam.news_manager.dao.exception.DAOException;
-import com.epam.news_manager.dao.impl.DAOFactory;
+import com.epam.news_manager.dao.DAOFactory;
 import com.epam.news_manager.service.exception.ServiceException;
 
 import java.text.DateFormat;
@@ -76,7 +76,7 @@ public class MoviesCatalog implements com.epam.news_manager.service.Catalog<Movi
             if (matcher.group(1).toUpperCase().contains("D")) {
                 DateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
                 try {
-                    movie.setDate(format.parse(matcher.group(2)));
+                    movie.setDat(format.parse(matcher.group(2)));
                 } catch (ParseException e) {
                     throw new ServiceException("Wrong date format");
                 }

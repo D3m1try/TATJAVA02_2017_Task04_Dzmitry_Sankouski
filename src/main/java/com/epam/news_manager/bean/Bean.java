@@ -1,7 +1,5 @@
 package com.epam.news_manager.bean;
 
-import com.epam.news_manager.dao.impl.FileIdGenerator;
-
 import java.io.Serializable;
 import java.util.Date;
 
@@ -11,7 +9,7 @@ import java.util.Date;
 public abstract class Bean implements Identifiable<String> , Serializable{
     String id = null;
     private String title ;
-    private Date date;
+    private Date dat;
     private String message;
 
     public Bean(){
@@ -40,12 +38,12 @@ public abstract class Bean implements Identifiable<String> , Serializable{
         this.title = title;
     }
 
-    public Date getDate() {
-        return date;
+    public Date getDat() {
+        return dat;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setDat(Date dat) {
+        this.dat = dat;
     }
 
     public String getMessage() {
@@ -63,7 +61,7 @@ public abstract class Bean implements Identifiable<String> , Serializable{
             return false;
         }
         result = (result) && this.title.equals(title);
-        result = (result) && this.date.equals(date);
+        result = (result) && this.dat.equals(dat);
         result = (result) && this.message.equals(message);
 
         return result;
