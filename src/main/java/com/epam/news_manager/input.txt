@@ -1,0 +1,9 @@
+add book -ISBN someisbn -d 2013-05-05 -t mybook -m some_message -p 333
+add book -ISBN some544isbn -d 2014-05-05 -t mybook -m some12_message -p 3333
+add book -ISBN some244isbn -d 2015-05-05 -t mybook -m some_me555ssage -p 33333
+add book -ISBN som888eisbn -d 2015-06-05 -t mybook -m some_unmessage -p 333333
+add movie -th hooorroor -d 2015-06-12 -t mymovie -m some_unme--ssage -s DONT_U_THINK_Ull_Be_Not_DEAD -l 333333
+add movie -th comedy -d 2015-06-11 -t hahahaha -m Awesome -s fun -l 345563
+find book  ISBN 44
+find book -p title mybook
+find book  title mybook
