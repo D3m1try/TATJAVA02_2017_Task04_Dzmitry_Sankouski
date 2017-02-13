@@ -19,17 +19,17 @@ public class SQLKeysDAO extends SQLGenericDAOimpl{
     };
     Connection connection;
     int affectedRows;
-    private final String CON_NAME = "jdbc:mysql://127.0.0.1/News";
-    private final String USER = "root";
-    private final String PASS = "123456";
-    private final String DB_NAME = "News";
+//    private final String CON_NAME = "jdbc:mysql://127.0.0.1/News";
+//    private final String USER = "root";
+//    private final String PASS = "123456";
+//    private final String DB_NAME = "News";
 
     public Keys read() throws DAOException {
         Keys result = null;
 
         try {
             ResultSet resultSet;
-            connection = DriverManager.getConnection(CON_NAME,USER,PASS);
+            connection = ConnectionPool.getInstance().getConnection();
             Statement statement = connection.createStatement();
 
             resultSet = statement.executeQuery(readKeysQueries[1]);
@@ -47,6 +47,7 @@ public class SQLKeysDAO extends SQLGenericDAOimpl{
                 result.getMovieIDs().add(resultSet.getString("id"));
             }
 
+            ConnectionPool.getInstance().returnConnection(connection);
 
         } catch (SQLException e) {
             e.printStackTrace();// TODO EXCeption

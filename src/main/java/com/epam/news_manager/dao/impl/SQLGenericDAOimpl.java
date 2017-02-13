@@ -23,12 +23,8 @@ import java.util.regex.Pattern;
  */
 public class SQLGenericDAOimpl<T extends Serializable & Identifiable<String>> implements GenericDAO<T, String> {
     private Class<T> type;
-    private final String CON_NAME = "jdbc:mysql://127.0.0.1/News";
-    private final String USER = "root";
-    private final String PASS = "123456";
-    private final String DB_NAME = "News";
-    private final String EXISTS_QUERY = "SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = '" + DB_NAME + "'";
-    private final String CREATE_QUERY = "INSERT INTO 'books' VALUES id = '2' ";
+
+
 
     public SQLGenericDAOimpl(Class<T> type) {
         this.type = type;
@@ -50,7 +46,7 @@ public class SQLGenericDAOimpl<T extends Serializable & Identifiable<String>> im
             newInstance.setId(id);
             //assigning id
 
-            connection = DriverManager.getConnection(CON_NAME, USER, PASS);
+            connection = ConnectionPool.getInstance().getConnection();
             statement = connection.createStatement();
             ResultSet rs = statement.executeQuery("SHOW TABLES LIKE '" + type.getSimpleName().toLowerCase() + "'");
             if(!rs.next()){
@@ -59,6 +55,8 @@ public class SQLGenericDAOimpl<T extends Serializable & Identifiable<String>> im
 
 
             affectedRows = statement.executeUpdate(SQLQueryCreator.getInstance().getInsert((Bean) newInstance));
+
+            ConnectionPool.getInstance().returnConnection(connection);
 
             return id;
         } catch (SQLException e) {
@@ -88,7 +86,7 @@ public class SQLGenericDAOimpl<T extends Serializable & Identifiable<String>> im
         String query = SQLQueryCreator.getInstance().getSelect(id, type);
 
         try {
-            connection = DriverManager.getConnection(CON_NAME, USER, PASS);
+            connection = ConnectionPool.getInstance().getConnection();
             Statement statement = connection.createStatement();
 
             ResultSet resultSet = statement.executeQuery(query);
@@ -100,6 +98,9 @@ public class SQLGenericDAOimpl<T extends Serializable & Identifiable<String>> im
             // creating object to fill
 
             BeanTinker.setFields(result, resultSet);
+
+            ConnectionPool.getInstance().returnConnection(connection);
+
             return result;
         } catch (InvocationTargetException e1) {
             throw new DAOException(e1);
