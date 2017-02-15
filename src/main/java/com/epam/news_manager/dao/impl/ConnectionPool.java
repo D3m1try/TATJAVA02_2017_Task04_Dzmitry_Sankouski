@@ -15,7 +15,7 @@ public final class ConnectionPool {
     private final String CON_NAME = "jdbc:mysql://127.0.0.1/News";
     private final String USER = "root";
     private final String PASS = "123456";
-    private final String DB_NAME = "News";
+
 
 
     private BlockingQueue<Connection> connectionQueue = new ArrayBlockingQueue<Connection>(10);
@@ -30,9 +30,13 @@ public final class ConnectionPool {
     }
 
 
-    public Connection getConnection(){
+    public Connection getConnection() throws SQLException {
         Connection connection;
         connection = connectionQueue.poll();
+        if (connection == null){
+            reFill();
+            connection = connectionQueue.poll();
+        }
         givenAwayConQueue.offer(connection);
         return connection;
     }

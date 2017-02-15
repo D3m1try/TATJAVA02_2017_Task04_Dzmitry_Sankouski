@@ -2,7 +2,6 @@ package com.epam.news_manager.dao.impl;
 
 import com.epam.news_manager.bean.BeanFactory;
 import com.epam.news_manager.bean.Identifiable;
-import com.epam.news_manager.dao.Findable;
 import com.epam.news_manager.dao.GenericDAO;
 import com.epam.news_manager.dao.exception.DAOException;
 
@@ -31,7 +30,7 @@ public class FileGenericDAOImpl<T extends Serializable & Identifiable<String>> i
 
     @Override
     public String create(T newInstance) throws DAOException {
-        newInstance.setId(FileIdGenerator.getInstance().generateId(newInstance));
+        newInstance.setId(StringIdGenerator.getInstance().generateId(newInstance));
         this.update(newInstance);
         return newInstance.getId();
     }

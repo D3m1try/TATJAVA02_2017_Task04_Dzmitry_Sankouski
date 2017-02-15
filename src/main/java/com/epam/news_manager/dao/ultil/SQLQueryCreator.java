@@ -40,7 +40,7 @@ public class SQLQueryCreator {
         query.append(bean.getClass().getSimpleName()).append(GAP).append(LEFT_PARENSIS);
 
         for (Map.Entry<String,Object> field :
-                BeanTinker.getFields(bean).entrySet()) {
+                BeanSurgeon.getFields(bean).entrySet()) {
             query.append(field.getKey())
                     .append(GAP)
                     .append(typeConvert(field.getValue()))
@@ -61,7 +61,7 @@ public class SQLQueryCreator {
         query.append(bean.getClass().getSimpleName()).append(GAP);
 
         for (Map.Entry<String,Object> field :
-                BeanTinker.getFields(bean).entrySet()) {
+                BeanSurgeon.getFields(bean).entrySet()) {
 
             if (field.getValue() instanceof Date){
                 field.setValue(new java.sql.Date(((Date) field.getValue()).getTime()));
@@ -79,7 +79,8 @@ public class SQLQueryCreator {
         return query.toString();
     }
 
-    public String getSelect(String id, Class type){
+    // objects of different classes stored in different tables
+    public String getSelect(Class type, String id){
         StringBuilder result = new StringBuilder();
         result.append(SELECT_BASE).append(type.getSimpleName().toLowerCase())
                 .append(" where id = ")
@@ -88,7 +89,20 @@ public class SQLQueryCreator {
     }
 
 
+    public String getSelect(Class type, String field, String value){
+        StringBuilder result = new StringBuilder();
+        result.append(SELECT_BASE).append(type.getSimpleName().toLowerCase())
+                .append(" where ").append(field).append(" = ")
+                .append(APOSTROPHE).append(value).append(APOSTROPHE);
+        return  result.toString();
+    }
 
+
+    public String getFind(String field, String value){
+        StringBuilder result = new StringBuilder();
+
+        return  result.toString();
+    }
 
 
     private String typeConvert(Object target){

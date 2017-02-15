@@ -18,11 +18,6 @@ public class SQLKeysDAO extends SQLGenericDAOimpl{
             "select id from movie"
     };
     Connection connection;
-    int affectedRows;
-//    private final String CON_NAME = "jdbc:mysql://127.0.0.1/News";
-//    private final String USER = "root";
-//    private final String PASS = "123456";
-//    private final String DB_NAME = "News";
 
     public Keys read() throws DAOException {
         Keys result = null;

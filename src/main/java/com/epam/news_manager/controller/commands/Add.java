@@ -30,6 +30,7 @@ public class Add implements Command {
                 MoviesCatalog.getInstance().add(request);
             }
         } catch (ServiceException e) {
+            //TODO write log
             return e.getMessage();
         }
 

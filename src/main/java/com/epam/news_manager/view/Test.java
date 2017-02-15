@@ -2,7 +2,6 @@ package com.epam.news_manager.view;
 
 import com.epam.news_manager.bean.BeanFactory;
 import com.epam.news_manager.bean.Book;
-import com.epam.news_manager.bean.Disk;
 import com.epam.news_manager.bean.Movie;
 import com.epam.news_manager.dao.ultil.SQLQueryCreator;
 
@@ -66,7 +65,7 @@ public class Test {
 
         System.out.println(SQLQueryCreator.getInstance().getCreateTable(book));
         System.out.println(SQLQueryCreator.getInstance().getInsert(book));
-        System.out.println(SQLQueryCreator.getInstance().getSelect("0.book", book.getClass()));
+        System.out.println(SQLQueryCreator.getInstance().getSelect(book.getClass(), "0.book"));
         System.out.println(SQLQueryCreator.getInstance().getCreateTable(movie));
 
 

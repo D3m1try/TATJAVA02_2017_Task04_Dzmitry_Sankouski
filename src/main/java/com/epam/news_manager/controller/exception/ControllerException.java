@@ -5,11 +5,15 @@ package com.epam.news_manager.controller.exception;
  */
 public class ControllerException extends Exception{
 
-    public ControllerException(){
-
-    }
-
-    public ControllerException(String message){
-        super(message);
-    }
+//    public ControllerException(){
+//
+//    }
+//
+//    public ControllerException(String message){
+//        super(message);
+//    }
+//
+//    public ControllerException(Exception e){
+//        super(e);
+//    }
 }

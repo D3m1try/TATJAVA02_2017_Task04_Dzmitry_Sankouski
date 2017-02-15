@@ -6,22 +6,20 @@ import com.epam.news_manager.bean.Identifiable;
 import com.epam.news_manager.dao.Findable;
 import com.epam.news_manager.dao.GenericDAO;
 import com.epam.news_manager.dao.exception.DAOException;
-import com.epam.news_manager.dao.ultil.BeanTinker;
+import com.epam.news_manager.dao.ultil.BeanSurgeon;
 import com.epam.news_manager.dao.ultil.SQLQueryCreator;
 
 import java.beans.IntrospectionException;
 import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * Created by Dzmitry_Sankouski on 09-Feb-17.
  */
-public class SQLGenericDAOimpl<T extends Serializable & Identifiable<String>> implements GenericDAO<T, String> {
+public class SQLGenericDAOimpl<T extends Serializable & Identifiable<String>> implements GenericDAO<T, String>, Findable {
     private Class<T> type;
 
 
@@ -42,7 +40,7 @@ public class SQLGenericDAOimpl<T extends Serializable & Identifiable<String>> im
         Statement statement;
 
         try {
-            id = FileIdGenerator.getInstance().generateId(newInstance);
+            id = StringIdGenerator.getInstance().generateId(newInstance);
             newInstance.setId(id);
             //assigning id
 
@@ -60,12 +58,6 @@ public class SQLGenericDAOimpl<T extends Serializable & Identifiable<String>> im
 
             return id;
         } catch (SQLException e) {
-//            Pattern pattern = Pattern.compile("Table '.+' doesn't exist");
-//            Matcher m = pattern.matcher(e.getMessage());
-//            if (m.matches()){
-//
-//                statement.executeUpdate(SQLQueryCreator.getInstance().getInsert((Bean) newInstance))
-//            }
 
             throw new DAOException(e);
         } catch (IllegalAccessException e) {
@@ -82,8 +74,7 @@ public class SQLGenericDAOimpl<T extends Serializable & Identifiable<String>> im
     @Override
     public T read(String id) throws DAOException {
         Connection connection;
-        Map<String, Class> fields = null;
-        String query = SQLQueryCreator.getInstance().getSelect(id, type);
+        String query = SQLQueryCreator.getInstance().getSelect(type, id);
 
         try {
             connection = ConnectionPool.getInstance().getConnection();
@@ -93,11 +84,10 @@ public class SQLGenericDAOimpl<T extends Serializable & Identifiable<String>> im
             resultSet.next();
             // retrieving data from database
 
-            fields = BeanTinker.getFields(type);
             T result = (T) BeanFactory.getInstance().getBean(type);
             // creating object to fill
 
-            BeanTinker.setFields(result, resultSet);
+            BeanSurgeon.setFields(result, resultSet);
 
             ConnectionPool.getInstance().returnConnection(connection);
 
@@ -116,16 +106,60 @@ public class SQLGenericDAOimpl<T extends Serializable & Identifiable<String>> im
 
     }
 
+    @Override
     public void update(Serializable transientObject) throws DAOException {
 
     }
 
+    @Override
     public void delete(Serializable persistentObject) {
 
     }
 
+    @Override
     public List<T> find(String fieldName, String value, boolean isPureSearch) {
-        return null;
-    }
+        Connection connection;
+        Statement statement;
+        String query = "";
+        List<T> result = new ArrayList<>();
+        List<String> resultIds = new ArrayList<>();
+        if (isPureSearch){
 
+            query = SQLQueryCreator.getInstance().getSelect(type, fieldName, value);
+
+        } else {
+
+//            query = SQLQueryCreator.getInstance().getSelect(type, fieldName, value);
+            //TODO query for not pure search
+        }
+
+
+        try {
+            T bean = (T) BeanFactory.getInstance().getBean(type);
+            connection = ConnectionPool.getInstance().getConnection();
+            statement = connection.createStatement();
+
+            // retrieving data from database
+            ResultSet resultSet = statement.executeQuery(query);
+
+            // fillling bean with data & adding it to result
+            while (resultSet.next()){
+                BeanSurgeon.setFields(bean,resultSet);
+                result.add(bean);
+            }
+
+            ConnectionPool.getInstance().returnConnection(connection);
+        } catch (InvocationTargetException e1) {
+            //TODO logging
+        } catch (IntrospectionException e1) {
+            //TODO logging
+        } catch (SQLException e1) {
+            //TODO logging
+        } catch (IllegalAccessException e1) {
+            //TODO logging
+        } catch (ClassNotFoundException e1) {
+            //TODO logging
+        }
+        return result;
+    }
 }

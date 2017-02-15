@@ -7,14 +7,14 @@ import com.epam.news_manager.bean.Keys;
 /**
  * Created by Dzmitry_Sankouski on 02-Feb-17.
  */
-public class FileIdGenerator {
-    private static FileIdGenerator instance = new FileIdGenerator();
+public class StringIdGenerator {
+    private static StringIdGenerator instance = new StringIdGenerator();
 
-    private FileIdGenerator(){
+    private StringIdGenerator(){
 
     }
 
-    public static FileIdGenerator getInstance() {
+    public static StringIdGenerator getInstance() {
         return instance;
     }
 

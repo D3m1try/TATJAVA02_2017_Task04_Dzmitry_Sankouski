@@ -1,4 +1,4 @@
-add book -ISBN someisbn -d 2013-05-05 -t mybook -m some_message -p 333
+add book -ISBN someisbn -d 2013-05-05 -t mybk -m some_message -p 333
 add book -ISBN some544isbn -d 2014-05-05 -t mybook -m some12_message -p 3333
 add book -ISBN some244isbn -d 2015-05-05 -t mybook -m some_me555ssage -p 33333
 add book -ISBN som888eisbn -d 2015-06-05 -t mybook -m some_unmessage -p 333333

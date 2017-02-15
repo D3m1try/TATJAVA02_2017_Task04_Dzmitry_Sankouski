@@ -27,7 +27,7 @@ final class CommandProvider {
             commandName = CommandName.valueOf(name.toUpperCase());
             command = repository.get(commandName);
         }catch(IllegalArgumentException | NullPointerException e){
-//write log
+//TODO write log
             command = repository.get(CommandName.NON_EXISTING);
         }
         return command;

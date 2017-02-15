@@ -18,7 +18,6 @@ import java.util.regex.Pattern;
  */
 public class BooksCatalog implements com.epam.news_manager.service.Catalog<Book> {
     private static BooksCatalog instance = new BooksCatalog();
-    private boolean isBooksUp = false;
     private Set<Book> books = new HashSet<>();
     private Set<Book> savedBooks;
 
@@ -26,7 +25,7 @@ public class BooksCatalog implements com.epam.news_manager.service.Catalog<Book>
 
     }
 
-    private void initBooks() throws ServiceException {
+    private void initBooks() {
         if (BeanFactory.getInstance().getKeys().getBookIDs().size() == 0) {
             savedBooks = new HashSet<>();
         } else {
@@ -35,7 +34,7 @@ public class BooksCatalog implements com.epam.news_manager.service.Catalog<Book>
                 try {
                     savedBooks.add(DAOFactory.getInstance().getBookDAO().read(id));
                 } catch (DAOException e) {
-                    throw new ServiceException(e.getMessage());
+                    //TODO logging
                 }
             }
         }
@@ -52,7 +51,7 @@ public class BooksCatalog implements com.epam.news_manager.service.Catalog<Book>
                     DAOFactory.getInstance().getBookDAO().create(newBook));
             DAOFactory.getInstance().getKeysDAO().update(BeanFactory.getInstance().getKeys());
         } catch (DAOException e) {
-            throw new ServiceException(e.getMessage());
+            throw new ServiceException(e);
         }
     }
 
@@ -129,7 +128,7 @@ public class BooksCatalog implements com.epam.news_manager.service.Catalog<Book>
             DAOFactory.getInstance().getKeysDAO().update(BeanFactory.getInstance().getKeys());
             DAOFactory.getInstance().getBooksDAO().update(BeanFactory.getInstance().getBooks());
         } catch (DAOException e) {
-            throw new ServiceException(e.getMessage());
+            throw new ServiceException(e);
         }
 
     }
