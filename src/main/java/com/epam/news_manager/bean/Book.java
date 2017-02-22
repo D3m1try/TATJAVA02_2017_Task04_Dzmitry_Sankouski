@@ -39,4 +39,25 @@ public class Book extends Bean implements Serializable {
         return result.toString();
 
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+
+        Book book = (Book) o;
+
+        if (pageCount != book.pageCount) return false;
+        return ISBN != null ? ISBN.equals(book.ISBN) : book.ISBN == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = super.hashCode();
+        result = 31 * result + pageCount;
+        result = 31 * result + (ISBN != null ? ISBN.hashCode() : 0);
+        return result;
+    }
 }

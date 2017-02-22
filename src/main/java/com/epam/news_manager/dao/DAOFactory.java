@@ -15,8 +15,7 @@ public class DAOFactory {
     private SQLGenericDAOimpl<Disk> diskDAO = new SQLGenericDAOimpl<Disk>(Disk.class);
     private SQLGenericDAOimpl<Movie> movieDAO = new SQLGenericDAOimpl<Movie>(Movie.class);
     private SQLGenericDAOimpl<Books> booksDAO = new SQLGenericDAOimpl<Books>(Books.class);
-    private SQLGenericDAOimpl<Disks> disksDAO = new SQLGenericDAOimpl<Disks>(Disks.class);
-    private SQLGenericDAOimpl<Movies> moviesDAO = new SQLGenericDAOimpl<Movies>(Movies.class);
+
 
     private DAOFactory() {
     }
@@ -45,11 +44,5 @@ public class DAOFactory {
         return booksDAO;
     }
 
-    public GenericDAO<Disks,String> getDisksDAO() {
-        return disksDAO;
-    }
 
-    public GenericDAO<Movies,String> getMoviesDAO() {
-        return moviesDAO;
-    }
 }

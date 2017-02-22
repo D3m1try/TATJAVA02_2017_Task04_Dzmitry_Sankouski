@@ -1,6 +1,7 @@
 package com.epam.test_news_manger.dao;
 
 import com.epam.news_manager.bean.*;
+import com.epam.news_manager.dao.GenericDAO;
 import com.epam.news_manager.dao.exception.DAOException;
 import com.epam.news_manager.dao.DAOFactory;
 import com.epam.news_manager.dao.impl.FileGenericDAOImpl;
@@ -18,9 +19,9 @@ public class FindableTest {
     static Book book;
     static Books books;
     static Disk disk;
-    static Disks disks;
+
     static Movie movie;
-    static Movies movies;
+
     static String id;
 
 
@@ -45,39 +46,22 @@ public class FindableTest {
         disk.setDat(new Date(13454566));
         disk.setMessage("kjndfskjsdkfsjkdfjvnsk");
 
-        disks = BeanFactory.getInstance().getDisks();
-        disks.setTitle("disks");
-        disks.setDat(new Date(13454566));
-        disks.setMessage("kjn--------------dfskjsdkfsjkdfjvnsk");
-        for (int i = 0; i < 3; i++) {
-            disks.getListOfDisks().add(disk);
-        }
 
         movie = BeanFactory.getInstance().getMovie();
         movie.setTitle("ksjfssssssssssssskas");
         movie.setDat(new Date(13454566));
         movie.setMessage("kjndfskjsdkfsjkdfhhhhhhhhhhhhhhhhhjvnsk");
 
-        movies = BeanFactory.getInstance().getMovies();
-        movies.setTitle("ksjqqq22222fkas");
-        movies.setDat(new Date(13454566));
-        movies.setMessage("kjndfskjs33333333333dkfsjkdfjvnsk");
-        for (int i = 0; i < 3; i++) {
-            movies.getListOfMovies().add(movie);
-        }
 
         return new Object[][] {
                 {DAOFactory.getInstance().getBookDAO(), book},
-                {DAOFactory.getInstance().getBooksDAO(), books},
                 {DAOFactory.getInstance().getDiskDAO(), disk},
-                {DAOFactory.getInstance().getDisksDAO(), disks},
                 {DAOFactory.getInstance().getMovieDAO(), movie},
-                {DAOFactory.getInstance().getMoviesDAO(), movies}
         };
     }
 
     @Test(dataProvider = "test1")
-    public void findTest(FileGenericDAOImpl dao, Serializable bean) throws DAOException{
+    public void findTest(GenericDAO<Serializable, String> dao, Serializable bean) throws DAOException {
         BeanFactory.getInstance().getKeys().getBookIDs().add(dao.create(bean));
         Assert.assertEquals(bean,dao.find("date",new Date(13454566).toString(), false).get(0),"find fails");
     }

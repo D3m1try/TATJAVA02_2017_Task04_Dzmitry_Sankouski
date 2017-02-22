@@ -14,11 +14,8 @@ import java.util.Date;
  */
 public class GenericDAOSmokeTests {
     static Book book;
-    static Books books;
     static Disk disk;
-    static Disks disks;
     static Movie movie;
-    static Movies movies;
     static String id;
 
     @BeforeClass
@@ -33,50 +30,30 @@ public class GenericDAOSmokeTests {
         book.setMessage("kjndfskjsjkdfjvnsk");
         book.setISBN("sdjfkvgsjdfkvasjdfvka");
 
-        books = BeanFactory.getInstance().getBooks();
-        books.setTitle("ksjfkas");
-        books.setDat(new Date(13454566));
-        books.setMessage("kjndfskjsdkfsjkdfjvnsk");
-        for (int i = 0; i < 3; i++) {
-            books.getListOfBooks().add(book);
-        }
+
 
         disk = BeanFactory.getInstance().getDisk();
         disk.setTitle("disk");
         disk.setDat(new Date(13454566));
         disk.setMessage("kjndfskjsdkfsjkdfjvnsk");
 
-        disks = BeanFactory.getInstance().getDisks();
-        disks.setTitle("disks");
-        disks.setDat(new Date(13454566));
-        disks.setMessage("kjn--------------dfskjsdkfsjkdfjvnsk");
-        for (int i = 0; i < 3; i++) {
-            disks.getListOfDisks().add(disk);
-        }
 
         movie = BeanFactory.getInstance().getMovie();
         movie.setTitle("ksjfssssssssssssskas");
         movie.setDat(new Date(13454566));
         movie.setMessage("kjndfskjsdkfsjkdfhhhhhhhhhhhhhhhhhjvnsk");
         movie.setLength(10000);
-//        movie.setSlogan("lsdjfhg");
-//        movie.setTheme("sdkjfvd");
+        movie.setSlogan("lsdjfhg");
+        movie.setTheme("sdkjfvd");
 
-        movies = BeanFactory.getInstance().getMovies();
-        movies.setTitle("ksjqqq22222fkas");
-        movies.setDat(new Date(13454566));
-        movies.setMessage("kjndfskjs33333333333dkfsjkdfjvnsk");
-        for (int i = 0; i < 3; i++) {
-            movies.getListOfMovies().add(movie);
-        }
 
         return new Object[][] {
                 {DAOFactory.getInstance().getBookDAO(), book},
-                {DAOFactory.getInstance().getBooksDAO(), books},
+
                 {DAOFactory.getInstance().getDiskDAO(), disk},
-                {DAOFactory.getInstance().getDisksDAO(), disks},
+
                 {DAOFactory.getInstance().getMovieDAO(), movie},
-                {DAOFactory.getInstance().getMoviesDAO(), movies}
+
         };
     }
 

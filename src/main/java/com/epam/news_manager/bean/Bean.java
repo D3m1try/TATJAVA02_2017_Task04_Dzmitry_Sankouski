@@ -67,5 +67,12 @@ public abstract class Bean implements Identifiable<String> , Serializable{
         return result;
     }
 
-
+    @Override
+    public int hashCode() {
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (title != null ? title.hashCode() : 0);
+        result = 31 * result + (dat != null ? dat.hashCode() : 0);
+        result = 31 * result + (message != null ? message.hashCode() : 0);
+        return result;
+    }
 }

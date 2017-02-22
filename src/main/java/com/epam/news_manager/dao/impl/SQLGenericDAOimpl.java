@@ -162,4 +162,9 @@ public class SQLGenericDAOimpl<T extends Serializable & Identifiable<String>> im
         }
         return result;
     }
+
+    @Override
+    public List find(String value, boolean isPureSearch) {
+        return null;
+    }
 }

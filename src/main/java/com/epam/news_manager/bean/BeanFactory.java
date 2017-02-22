@@ -15,8 +15,6 @@ public class BeanFactory {
     }
 
     private Books books = new Books();
-    private Disks disks = new Disks();
-    private Movies movies = new Movies();
     private Keys keys;
 
     private static BeanFactory instance = new BeanFactory();
@@ -72,13 +70,6 @@ public class BeanFactory {
         return books;
     }
 
-    public Disks getDisks() {
-        return disks;
-    }
-
-    public Movies getMovies() {
-        return movies;
-    }
 
 
 

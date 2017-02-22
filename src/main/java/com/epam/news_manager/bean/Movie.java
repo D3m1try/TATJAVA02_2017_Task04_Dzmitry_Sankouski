@@ -52,4 +52,27 @@ public class Movie extends Bean implements Serializable {
         return result.toString();
 
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+
+        Movie movie = (Movie) o;
+
+        if (length != movie.length) return false;
+        if (theme != null ? !theme.equals(movie.theme) : movie.theme != null) return false;
+        return slogan != null ? slogan.equals(movie.slogan) : movie.slogan == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = super.hashCode();
+        result = 31 * result + length;
+        result = 31 * result + (theme != null ? theme.hashCode() : 0);
+        result = 31 * result + (slogan != null ? slogan.hashCode() : 0);
+        return result;
+    }
 }

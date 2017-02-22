@@ -115,4 +115,9 @@ public class FileGenericDAOImpl<T extends Serializable & Identifiable<String>> i
 
         return result;
     }
+
+    @Override
+    public List find(String value, boolean isPureSearch) {
+        return null;
+    }
 }
