@@ -11,6 +11,8 @@ import java.util.Set;
  */
 public abstract class GenericCatalog<T extends Bean> implements Catalog<T> {
     //not finished yet
+    // NIASILIL
+
     private Class<T> type;
     private boolean isBooksUp = false;
     private Set<Bean> books = new HashSet<>();
@@ -113,7 +115,7 @@ public abstract class GenericCatalog<T extends Bean> implements Catalog<T> {
 //        }
 //
 //        DAOFactory.getInstance().getKeysDAO().update(BeanFactory.getInstance().getKeys());
-//        DAOFactory.getInstance().getBooksDAO().update(BeanFactory.getInstance().getBooks());
+//        DAOFactory.getInstance().getBooksDAO().update(BeanFactory.getInstance().getDisks());
 //
 //    }
 //

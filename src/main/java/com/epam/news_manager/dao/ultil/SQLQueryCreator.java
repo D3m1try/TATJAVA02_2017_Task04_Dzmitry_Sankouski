@@ -31,10 +31,6 @@ public class SQLQueryCreator {
         return instance;
     }
 
-    //    private final String CREATE_TABLE_BASE = "create table if not exists ";
-
-
-
     public String getCreateTable(Bean bean) throws IllegalAccessException, IntrospectionException, InvocationTargetException {
         StringBuilder query = new StringBuilder(CREATE_TABLE_BASE);
         query.append(bean.getClass().getSimpleName()).append(GAP).append(LEFT_PARENSIS);

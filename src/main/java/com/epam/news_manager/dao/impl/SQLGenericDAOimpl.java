@@ -35,7 +35,6 @@ public class SQLGenericDAOimpl<T extends Serializable & Identifiable<String>> im
     @Override
     public String create(T newInstance) throws DAOException {
         Connection connection;
-        int affectedRows;
         String id;
         Statement statement;
 
@@ -52,7 +51,7 @@ public class SQLGenericDAOimpl<T extends Serializable & Identifiable<String>> im
             }
 
 
-            affectedRows = statement.executeUpdate(SQLQueryCreator.getInstance().getInsert((Bean) newInstance));
+            statement.executeUpdate(SQLQueryCreator.getInstance().getInsert((Bean) newInstance));
 
             ConnectionPool.getInstance().returnConnection(connection);
 

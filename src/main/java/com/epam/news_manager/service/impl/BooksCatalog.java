@@ -2,6 +2,7 @@ package com.epam.news_manager.service.impl;
 
 import com.epam.news_manager.bean.BeanFactory;
 import com.epam.news_manager.bean.Book;
+import com.epam.news_manager.bean.Books;
 import com.epam.news_manager.dao.exception.DAOException;
 import com.epam.news_manager.dao.DAOFactory;
 import com.epam.news_manager.service.exception.ServiceException;
@@ -18,8 +19,6 @@ import java.util.regex.Pattern;
  */
 public class BooksCatalog implements com.epam.news_manager.service.Catalog<Book> {
     private static BooksCatalog instance = new BooksCatalog();
-    private Set<Book> books = new HashSet<>();
-    private Set<Book> savedBooks;
 
     private BooksCatalog() {
 
@@ -27,12 +26,12 @@ public class BooksCatalog implements com.epam.news_manager.service.Catalog<Book>
 
     private void initBooks() {
         if (BeanFactory.getInstance().getKeys().getBookIDs().size() == 0) {
-            savedBooks = new HashSet<>();
+
         } else {
             for (String id :
                     BeanFactory.getInstance().getKeys().getBookIDs()) {
                 try {
-                    savedBooks.add(DAOFactory.getInstance().getBookDAO().read(id));
+                    Books.getInstance().getBooks().add(DAOFactory.getInstance().getBookDAO().read(id));
                 } catch (DAOException e) {
                     //TODO logging
                 }
@@ -45,7 +44,7 @@ public class BooksCatalog implements com.epam.news_manager.service.Catalog<Book>
         Book newBook = new Book();
         fillBook(newBook, request);
 
-        books.add(newBook);
+        Books.getInstance().getBooks().add(newBook);
         try {
             BeanFactory.getInstance().getKeys().getBookIDs().add(
                     DAOFactory.getInstance().getBookDAO().create(newBook));
@@ -115,13 +114,13 @@ public class BooksCatalog implements com.epam.news_manager.service.Catalog<Book>
     @Override
     public void save() throws ServiceException {
         for (Book book :
-                books) {
+                Books.getInstance().getBooks()) {
             try {
                 DAOFactory.getInstance().getBookDAO().create(book);
             } catch (DAOException e) {
                 throw new ServiceException(e.getMessage());
             }
-            savedBooks.add(book);
+            Books.getInstance().getSavedBooks().add(book);
         }
 
         try {

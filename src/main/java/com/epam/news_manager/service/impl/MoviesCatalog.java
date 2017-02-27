@@ -2,6 +2,7 @@ package com.epam.news_manager.service.impl;
 
 import com.epam.news_manager.bean.BeanFactory;
 import com.epam.news_manager.bean.Movie;
+import com.epam.news_manager.bean.Movies;
 import com.epam.news_manager.dao.exception.DAOException;
 import com.epam.news_manager.dao.DAOFactory;
 import com.epam.news_manager.service.exception.ServiceException;
@@ -20,9 +21,7 @@ import java.util.List;
  */
 public class MoviesCatalog implements com.epam.news_manager.service.Catalog<Movie> {
     private static MoviesCatalog instance = new MoviesCatalog();
-    private boolean isBooksUp = false;
-    private Set<Movie> movies = new HashSet<>();
-    private Set<Movie> savedMovies;
+    private boolean isMoviessUp = false;
 
     private MoviesCatalog() {
 
@@ -30,12 +29,12 @@ public class MoviesCatalog implements com.epam.news_manager.service.Catalog<Movi
 
     private void initBooks() throws ServiceException {
         if (BeanFactory.getInstance().getKeys().getBookIDs().size() == 0) {
-            savedMovies = new HashSet<>();
+
         } else {
             for (String id :
                     BeanFactory.getInstance().getKeys().getBookIDs()) {
                 try {
-                    savedMovies.add(DAOFactory.getInstance().getMovieDAO().read(id));
+                    Movies.getInstance().getSavedMovies().add(DAOFactory.getInstance().getMovieDAO().read(id));
                 } catch (DAOException e) {
                     throw new ServiceException(e.getMessage());
                 }
@@ -48,7 +47,7 @@ public class MoviesCatalog implements com.epam.news_manager.service.Catalog<Movi
         Movie newMovie = new Movie();
         fillMovie(newMovie, request);
 
-        movies.add(newMovie);
+        Movies.getInstance().getMovies().add(newMovie);
         try {
             BeanFactory.getInstance().getKeys().getMovieIDs().add(
                     DAOFactory.getInstance().getMovieDAO().create(newMovie));
@@ -121,13 +120,13 @@ public class MoviesCatalog implements com.epam.news_manager.service.Catalog<Movi
     @Override
     public void save() throws ServiceException {
         for (Movie movie :
-                movies) {
+                Movies.getInstance().getMovies()) {
             try {
                 DAOFactory.getInstance().getMovieDAO().create(movie);
             } catch (DAOException e) {
                 throw new ServiceException(e.getMessage());
             }
-            savedMovies.add(movie);
+            Movies.getInstance().getSavedMovies().add(movie);
         }
 
         try {

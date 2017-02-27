@@ -43,7 +43,7 @@ public class BookCatalogTests {
         book.setMessage(MESSAGE);
 
         BooksCatalog.getInstance().add("-ISBN " + ISBN + " -d " + DATE_STR + " -t " + TITLE + " -m " + MESSAGE + " -p " + COUNT);
-        testBook = BeanFactory.getInstance().getBooks().getListOfBooks().get(0);
+        testBook = BeanFactory.getInstance().getBooks().getBooks().get(0);
 
         Assert.assertEquals(book,testBook,"not equals");
 

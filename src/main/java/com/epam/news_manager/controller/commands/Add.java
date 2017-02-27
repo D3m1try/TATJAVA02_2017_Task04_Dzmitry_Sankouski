@@ -19,6 +19,7 @@ public class Add implements Command {
         Matcher matcher = pattern.matcher(request);
         matcher.find();
 
+
         try {
             if (matcher.group(2).toLowerCase().equals("book")){
                 BooksCatalog.getInstance().add(request);

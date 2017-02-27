@@ -8,10 +8,19 @@ import java.util.List;
  * Created by Dzmitry_Sankouski on 01-Feb-17.
  */
 public class Books extends Bean implements Serializable {
+    private static Books instance = new Books();
+    List<Book> books = new ArrayList<>();
+    List<Book> savedBooks = new ArrayList<>();
 
-    List<Book> listOfBooks = new ArrayList<>();
+    public static Books getInstance() {
+        return instance;
+    }
 
-    public List<Book> getListOfBooks() {
-        return listOfBooks;
+    public List<Book> getSavedBooks() {
+        return savedBooks;
+    }
+
+    public List<Book> getBooks() {
+        return books;
     }
 }

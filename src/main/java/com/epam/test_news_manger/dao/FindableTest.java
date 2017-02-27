@@ -4,7 +4,6 @@ import com.epam.news_manager.bean.*;
 import com.epam.news_manager.dao.GenericDAO;
 import com.epam.news_manager.dao.exception.DAOException;
 import com.epam.news_manager.dao.DAOFactory;
-import com.epam.news_manager.dao.impl.FileGenericDAOImpl;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -38,7 +37,7 @@ public class FindableTest {
         books.setDat(new Date(13454566));
         books.setMessage("kjndfskjsdkfsjkdfjvnsk");
         for (int i = 0; i < 3; i++) {
-            books.getListOfBooks().add(book);
+            books.getBooks().add(book);
         }
 
         disk = BeanFactory.getInstance().getDisk();
